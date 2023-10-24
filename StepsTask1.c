@@ -79,7 +79,7 @@ int main()
         linecount = linecount + 1; //needs slight fix
     }
 
-    printf("Number of records in file: %i\n", (linecount+1)); //output number of records
+    printf("Number of records in file: %i\n", (linecount)); //output number of records
     
     for (int i = 0; i < 3; i++) //get the first 3 records using the typedef array
     {
