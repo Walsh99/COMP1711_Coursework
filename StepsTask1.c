@@ -10,10 +10,17 @@ typedef struct {
 } FITNESS_DATA;
 
 // Define any additional variables here
-FITNESS_DATA listoffitnessdata[60];
-char testdate[20];
-char testtime[20];
-char teststeps[20];
+
+//create an array of type FITNESS_DATA to store the records
+FITNESS_DATA listoffitnessdata[500]; //given up to 500 records
+
+//create temp variables to then move into the typedef array
+char tempdate[11]; //using typedef
+char temptime[6]; //using typedef
+char tempsteps[4]; //should not pass 9999 steps
+
+int linecount = 0; //to count number of lines/records in the csv  
+
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -27,21 +34,18 @@ void tokeniseRecord(const char *input, const char *delimiter,
     char *token = strtok(inputCopy, delimiter);
     if (token != NULL) 
     {
-        //printf("%s", token);
         strcpy(date, token);
     }
     
     token = strtok(NULL, delimiter);
     if (token != NULL) 
     {
-        //printf("%s", token);
         strcpy(time, token);
     }
     
     token = strtok(NULL, delimiter);
     if (token != NULL) 
     {  
-        //printf("%s", token);
         strcpy(steps, token);
     }
     
@@ -53,37 +57,35 @@ void tokeniseRecord(const char *input, const char *delimiter,
 // Complete the main function
 int main() 
 {
+    //Open file
     char *filename = "FitnessData_2023.csv";
-    FILE *file = fopen(filename, "r");
+    FILE *file = fopen(filename, "r"); //to read
     if (file == NULL)
     {
         perror("");
         return 1;
     }
-    int buffer_size = 100;
+    int buffer_size = 500; //allow up to 500 lines
     char line_buffer[buffer_size];
 
-    int linecount = 0; //i added this
-    char* test;
-    
-
-    while (fgets(line_buffer, buffer_size, file) != NULL)
+    while (fgets(line_buffer, buffer_size, file) != NULL) //loop through the csv record by record
     {
-        tokeniseRecord(line_buffer, ",", testdate, testtime, teststeps);
-        //listoffitnessdata[linecount].date = testdate;
-        //listoffitnessdata[linecount].time = testtime;
-        //listoffitnessdata[linecount].steps = int(teststeps);
-        printf("%s", line_buffer);
-        printf("%s/%s/%s",testdate, testtime, teststeps);
-
-
+        tokeniseRecord(line_buffer, ",", tempdate, temptime, tempsteps); //use the tokeniseRecord to 
+        //copy all the temporary data from the cycle to the array of fitness_data
+        strcpy(listoffitnessdata[linecount].date ,tempdate);
+        strcpy(listoffitnessdata[linecount].time, temptime);
+        listoffitnessdata[linecount].steps = atoi(tempsteps); //had to use atoi to convert the str to int
+        
         linecount = linecount + 1; //needs slight fix
     }
 
-    printf("Number of records in file %i\n", (linecount+1));
+    printf("Number of records in file: %i\n", (linecount+1)); //output number of records
+    
+    for (int i = 0; i < 3; i++) //get the first 3 records using the typedef array
+    {
+        printf("%s/%s/%d\n",listoffitnessdata[i].date, listoffitnessdata[i].time, listoffitnessdata[i].steps);
+    }    
 
-    fclose(file);
+    fclose(file); //close the file
     return 0;
-
-
 }
