@@ -11,7 +11,9 @@ typedef struct {
 
 // Define any additional variables here
 FITNESS_DATA listoffitnessdata[60];
-
+char testdate[20];
+char testtime[20];
+char teststeps[20];
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -23,16 +25,23 @@ void tokeniseRecord(const char *input, const char *delimiter,
     
     // Tokenize the copied string
     char *token = strtok(inputCopy, delimiter);
-    if (token != NULL) {        strcpy(date, token);
+    if (token != NULL) 
+    {
+        //printf("%s", token);
+        strcpy(date, token);
     }
     
     token = strtok(NULL, delimiter);
-    if (token != NULL) {
+    if (token != NULL) 
+    {
+        //printf("%s", token);
         strcpy(time, token);
     }
     
     token = strtok(NULL, delimiter);
-    if (token != NULL) {
+    if (token != NULL) 
+    {  
+        //printf("%s", token);
         strcpy(steps, token);
     }
     
@@ -53,16 +62,22 @@ int main()
     }
     int buffer_size = 100;
     char line_buffer[buffer_size];
-    int linecount = 0;
+
+    int linecount = 0; //i added this
     char* test;
+    
+
     while (fgets(line_buffer, buffer_size, file) != NULL)
     {
-        
-        tokeniseRecord(line_buffer, ",", listoffitnessdata[linecount].date, listoffitnessdata[linecount].time, test[linecount]);
+        tokeniseRecord(line_buffer, ",", testdate, testtime, teststeps);
+        //listoffitnessdata[linecount].date = testdate;
+        //listoffitnessdata[linecount].time = testtime;
+        //listoffitnessdata[linecount].steps = int(teststeps);
         printf("%s", line_buffer);
+        printf("%s/%s/%s",testdate, testtime, teststeps);
+
 
         linecount = linecount + 1; //needs slight fix
-
     }
 
     printf("Number of records in file %i\n", (linecount+1));
