@@ -76,7 +76,7 @@ int main()
         strcpy(listoffitnessdata[linecount].time, temptime);
         listoffitnessdata[linecount].steps = atoi(tempsteps); //had to use atoi to convert the str to int
         
-        linecount = linecount + 1; //needs slight fix
+        linecount = linecount + 1; 
     }
 
     printf("Number of records in file: %i\n", (linecount)); //output number of records
