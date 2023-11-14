@@ -1,7 +1,10 @@
-#ifndef FITNESSDATASTRUCT_H
-#define FITNESSDATASTRUCT_H
-#include <stdlib.h>
+
+#ifndef FITNESS_DATA_STRUCT_H
+#define FITNESS_DATA_STRUCT_H
+
 #include <stdio.h>
+
+#define buffer_size 100
 
 // Define an appropriate struct
 typedef struct {
@@ -10,4 +13,7 @@ typedef struct {
 	int steps;
 } FITNESS_DATA;
 
-#endif
+// Helper function prototypes
+void tokeniseRecord(const char *input, const char *delimiter, char *date, char *time, char *steps);
+
+#endif // FITNESS_DATA_STRUCT_H
