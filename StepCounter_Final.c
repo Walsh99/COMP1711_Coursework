@@ -155,7 +155,18 @@ int main()
 
         case 'E':
         case 'e':
-            return 0;
+            counter = 0;
+            int total_steps = 0;
+            int mean_steps = 0;
+            while (fgets(line, buffer_size, input))
+            {   
+                tokeniseRecord(line, ",", tempdate, temptime, tempsteps);                
+                total_steps += atoi(tempsteps); //had to use atoi to convert the str to int
+                counter++;
+            }
+            mean_steps = total_steps / counter;
+            printf("%d\n", mean_steps);
+            fclose(input);       
             break;
 
         case 'F':
