@@ -133,7 +133,24 @@ int main()
 
         case 'D':
         case 'd':
-            return 0;
+            counter = 0;
+            FITNESS_DATA highest_steps = {"2000-01-01", "00:00", -1};
+            while (fgets(line, buffer_size, input))
+            {
+                tokeniseRecord(line, ",", tempdate, temptime, tempsteps); //use the tokeniseRecord to 
+                //copy all the temporary data from the cycle to the array of fitness_data
+                strcpy(listoffitnessdata[counter].date ,tempdate);
+                strcpy(listoffitnessdata[counter].time, temptime);
+                listoffitnessdata[counter].steps = atoi(tempsteps); //had to use atoi to convert the str to int
+                if (listoffitnessdata[counter].steps > highest_steps.steps)
+                {
+                    highest_steps = listoffitnessdata[counter];
+                }
+                
+                counter++;
+            }
+            printf("%s/%s/%d\n", highest_steps.date,highest_steps.time,highest_steps.steps);
+            fclose(input);
             break;
 
         case 'E':
