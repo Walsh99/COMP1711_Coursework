@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "FitnessDataStruct.h"
 
 // Struct moved to header file
@@ -171,6 +172,48 @@ int main()
 
         case 'F':
         case 'f':
+            counter = 0;
+            //Find the longest continuous period where the step count is above 500 steps            
+            while (fgets(line, buffer_size, input))
+            {
+                tokeniseRecord(line, ",", tempdate, temptime, tempsteps); //use the tokeniseRecord to 
+                //copy all the temporary data from the cycle to the array of fitness_data
+                strcpy(listoffitnessdata[counter].date ,tempdate);
+                strcpy(listoffitnessdata[counter].time, temptime);
+                listoffitnessdata[counter].steps = atoi(tempsteps); //had to use atoi to convert the str to int
+                counter++;
+            }
+            
+            FITNESS_DATA Current_Start_Period = {};
+            FITNESS_DATA Current_End_Period = {};
+            FITNESS_DATA Longest_Start_Period = {};
+            FITNESS_DATA Longest_End_Period = {};
+            int current_period_length = 0;
+            int longest_period_length = 0;
+
+            for (int i = 0; i < counter; i++) 
+            {
+                if(listoffitnessdata[i].steps > 500)
+                {
+                    Current_End_Period = listoffitnessdata[i];
+                    current_period_length += 1;
+                    if (current_period_length > longest_period_length)
+                    {
+                        longest_period_length = current_period_length;
+                        Longest_Start_Period = Current_Start_Period;
+                        Longest_End_Period = Current_End_Period;
+                    }
+                }
+                else
+                {
+                    Current_Start_Period = listoffitnessdata[i];
+                    //Current_End_Period = {};
+                    current_period_length = 0;
+                }
+            }   
+            printf("Longest Period Start: %s %s\n", Longest_Start_Period.date,Longest_Start_Period.time);
+            printf("Longest Period End: %s %s\n", Longest_End_Period.date,Longest_End_Period.time);
+            fclose(input);
             return 0;
             break;
 
