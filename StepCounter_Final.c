@@ -206,7 +206,7 @@ int main()
                 }
                 else
                 {
-                    Current_Start_Period = listoffitnessdata[i];
+                    Current_Start_Period = listoffitnessdata[i+1];
                     //Current_End_Period = {};
                     current_period_length = 0;
                 }
