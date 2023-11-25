@@ -185,7 +185,7 @@ int main()
                 total_steps += atoi(tempsteps); //had to use atoi to convert the str to int
                 counter++;
             }
-            mean_steps = total_steps / counter;
+            mean_steps = (total_steps + counter / 2) / counter;
             printf("Mean step count: %d\n", mean_steps);
             fclose(input);       
             break;
@@ -232,10 +232,9 @@ int main()
                     current_period_length = 0;
                 }
             }   
-            printf("Longest period Start: %s %s\n", Longest_Start_Period.date,Longest_Start_Period.time);
-            printf("Longest period End: %s %s\n", Longest_End_Period.date,Longest_End_Period.time);
+            printf("Longest period start: %s %s\n", Longest_Start_Period.date,Longest_Start_Period.time);
+            printf("Longest period end: %s %s\n", Longest_End_Period.date,Longest_End_Period.time);
             fclose(input);
-            return 0;
             break;
 
         case 'Q': //quit function
