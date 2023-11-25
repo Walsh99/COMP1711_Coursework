@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define buffer_size 100
+#define buffer_size 200
 
 // Define an appropriate struct
 typedef struct {
