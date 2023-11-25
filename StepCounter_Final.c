@@ -135,7 +135,7 @@ int main()
                 }
                 counter++;
             }
-            printf("Fewest steps: %s %s\n", lowest_steps.date,lowest_steps.time);
+            printf("Fewest steps: %s %s\n", lowest_steps.date, lowest_steps.time);
             fclose(input);
             break;
 
