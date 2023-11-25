@@ -42,32 +42,28 @@ void tokeniseRecord(const char *input, const char *delimiter,
     
     // Free the duplicated string
     free(inputCopy);
-
-                    }
-
-
+    }
 
 
 // Complete the main function
 int main() 
 {
-    // array of daily readings
-    //reading daily_readings[100];
-
     char choice;
     int counter = 0;
     float mean = 0;
 
-    while (1)
-    {
+    while (true)
+    {   
+        printf("Menu Options:\n");
         printf("A: Specify filename to be imported\n"); 
         printf("B: Display the total number of records in the file\n"); 
         printf("C: Find the date and time of the timeslot with the fewest steps\n");  
         printf("D: Find the data and time of the timeslot with the largest number of steps\n");   
         printf("E: Find the mean step count of all the records in the file\n");       
         printf("F: Find the longest continuous period where the step count is above 500 steps\n"); 
-        printf("Q: Quit Program\n"); 
-
+        printf("Q: Quit\n"); 
+        printf("Enter Choice: ");
+        
         // get the next character typed in and store in the 'choice'
         choice = getchar();
 
@@ -94,8 +90,12 @@ int main()
             FILE *input = fopen(filename, "r");
             if (!input)
             {
-                printf("Error: File could not be opened\n");
+                printf("Error: Could not find or open the file.\n");
                 return 1;
+            }
+            else
+            {
+                printf("File successfully loaded.\n");
             }
             break;
 
@@ -106,36 +106,43 @@ int main()
             {
                 counter++;
             }
-            printf("Total Records: %d\n", counter);
+            printf("Total records: %d\n", counter);
             fclose(input);
             break;
 
         case 'C':
         case 'c':
             counter = 0;
-            FITNESS_DATA lowest_steps = {"2000-01-01", "00:00", 9999};
+            FITNESS_DATA lowest_steps;
             while (fgets(line, buffer_size, input))
-            {
+            {   
                 tokeniseRecord(line, ",", tempdate, temptime, tempsteps); //use the tokeniseRecord to 
                 //copy all the temporary data from the cycle to the array of fitness_data
                 strcpy(listoffitnessdata[counter].date ,tempdate);
                 strcpy(listoffitnessdata[counter].time, temptime);
                 listoffitnessdata[counter].steps = atoi(tempsteps); //had to use atoi to convert the str to int
-                if (listoffitnessdata[counter].steps < lowest_steps.steps)
+
+                if (counter == 0)
                 {
                     lowest_steps = listoffitnessdata[counter];
                 }
-                
+                else
+                {
+                    if (listoffitnessdata[counter].steps < lowest_steps.steps)
+                    {   
+                    lowest_steps = listoffitnessdata[counter];
+                    }
+                }
                 counter++;
             }
-            printf("%s/%s/%d\n", lowest_steps.date,lowest_steps.time,lowest_steps.steps);
+            printf("Fewest steps: %s %s\n", lowest_steps.date,lowest_steps.time,lowest_steps.steps);
             fclose(input);
             break;
 
         case 'D':
         case 'd':
             counter = 0;
-            FITNESS_DATA highest_steps = {"2000-01-01", "00:00", -1};
+            FITNESS_DATA highest_steps;
             while (fgets(line, buffer_size, input))
             {
                 tokeniseRecord(line, ",", tempdate, temptime, tempsteps); //use the tokeniseRecord to 
@@ -143,14 +150,21 @@ int main()
                 strcpy(listoffitnessdata[counter].date ,tempdate);
                 strcpy(listoffitnessdata[counter].time, temptime);
                 listoffitnessdata[counter].steps = atoi(tempsteps); //had to use atoi to convert the str to int
-                if (listoffitnessdata[counter].steps > highest_steps.steps)
+                 
+                if (counter == 0)
                 {
                     highest_steps = listoffitnessdata[counter];
                 }
-                
+                else
+                {
+                    if (listoffitnessdata[counter].steps > highest_steps.steps)
+                    {
+                    highest_steps = listoffitnessdata[counter];
+                    }
+                }
                 counter++;
             }
-            printf("%s/%s/%d\n", highest_steps.date,highest_steps.time,highest_steps.steps);
+            printf("Largest steps: %s %s\n", highest_steps.date,highest_steps.time,highest_steps.steps);
             fclose(input);
             break;
 
@@ -166,7 +180,7 @@ int main()
                 counter++;
             }
             mean_steps = total_steps / counter;
-            printf("%d\n", mean_steps);
+            printf("Mean step count: %d\n", mean_steps);
             fclose(input);       
             break;
 
@@ -224,7 +238,7 @@ int main()
 
         // if they type anything else:
         default:
-            printf("Invalid choice\n");
+            printf("Invalid choice. Try again.\n");
             break;    
         }
     }
