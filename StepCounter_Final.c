@@ -130,7 +130,7 @@ int main()
                 {
                     if (listoffitnessdata[counter].steps < lowest_steps.steps)
                     {   
-                    lowest_steps = listoffitnessdata[counter];
+                        lowest_steps = listoffitnessdata[counter];
                     }
                 }
                 counter++;
