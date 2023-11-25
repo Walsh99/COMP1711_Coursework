@@ -135,7 +135,7 @@ int main()
                 }
                 counter++;
             }
-            printf("Fewest steps: %s %s\n", lowest_steps.date,lowest_steps.time,lowest_steps.steps);
+            printf("Fewest steps: %s %s\n", lowest_steps.date,lowest_steps.time);
             fclose(input);
             break;
 
@@ -164,7 +164,7 @@ int main()
                 }
                 counter++;
             }
-            printf("Largest steps: %s %s\n", highest_steps.date,highest_steps.time,highest_steps.steps);
+            printf("Largest steps: %s %s\n", highest_steps.date,highest_steps.time);
             fclose(input);
             break;
 
